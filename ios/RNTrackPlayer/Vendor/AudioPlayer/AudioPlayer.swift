@@ -234,6 +234,10 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         }
     }
     
+    func enableRemoteCommands() { // Added to sync when calling update method
+         self.enableRemoteCommands(remoteCommands)
+    }
+    
     // MARK: - NowPlayingInfo
     
     /// Reload all NowPlayingInfo for the playing item.
