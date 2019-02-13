@@ -219,6 +219,8 @@ public class RNTrackPlayer: RCTEventEmitter, AudioPlayerDelegate {
             return MPRemoteCommandHandlerStatus.success
         }
         
+        player.enableRemoteCommands()
+        
         resolve(NSNull())
     }
     
