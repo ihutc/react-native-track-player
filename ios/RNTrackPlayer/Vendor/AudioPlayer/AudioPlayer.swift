@@ -179,7 +179,7 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         self._currentItem = item
         self.updateMetaValues(item: item)
         setArtwork(forItem: item)
-        enableRemoteCommands(forItem: item)
+        //enableRemoteCommands(forItem: item) // Disabled because we won't use it on every song load
     }
     
     /**
