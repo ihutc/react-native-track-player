@@ -234,7 +234,7 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         }
     }
     
-    func enableRemoteCommands() { // Added to sync when calling update method
+    public func enableRemoteCommands() { // Added to sync when calling update method
          self.enableRemoteCommands(remoteCommands)
     }
     
