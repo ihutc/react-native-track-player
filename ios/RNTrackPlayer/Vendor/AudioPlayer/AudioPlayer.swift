@@ -144,6 +144,7 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         self.remoteCommandController = remoteCommandController
         
         self._wrapper.delegate = self
+        self._wrapper.automaticallyWaitsToMinimizeStalling = false
         self.remoteCommandController.audioPlayer = self
     }
     
@@ -177,7 +178,6 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         }
         
         
-        _wrapper.automaticallyWaitsToMinimizeStalling = false;
         
         self._currentItem = item
         self.updateMetaValues(item: item)
