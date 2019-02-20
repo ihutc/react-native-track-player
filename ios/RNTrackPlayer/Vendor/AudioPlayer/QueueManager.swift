@@ -130,9 +130,9 @@ class QueueManager<T> {
      */
     @discardableResult
     func jump(to index: Int) throws -> T {
-        guard index != currentIndex else {
+        /***guard index != currentIndex else {
             throw APError.QueueError.invalidIndex(index: index, message: "Cannot jump to the current item")
-        }
+        }***/ /** We need to skip because we don't load the first item within .add(). So we skip from item 1 to item 1. ***/
         
         guard index >= 0 && _items.count > index else {
             throw APError.QueueError.invalidIndex(index: index, message: "The jump index has to be positive and smaller thant the count of current items (\(_items.count))")

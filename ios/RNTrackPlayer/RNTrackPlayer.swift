@@ -152,6 +152,7 @@ public class RNTrackPlayer: RCTEventEmitter, AudioPlayerDelegate {
         let capabilities = supportedCapabilities?.compactMap { Capability(rawValue: $0) } ?? []
         
         let remoteCommands = capabilities.map { $0.mapToPlayerCommand(jumpInterval: options["jumpInterval"] as? NSNumber) }
+        player.remoteCommands.removeAll()
         player.remoteCommands.append(contentsOf: remoteCommands)
         
         player.remoteCommandController.handleChangePlaybackPositionCommand = { [weak self] event in
@@ -217,6 +218,8 @@ public class RNTrackPlayer: RCTEventEmitter, AudioPlayerDelegate {
             self?.sendEvent(withName: "remote-pause", body: nil)
             return MPRemoteCommandHandlerStatus.success
         }
+        
+        player.enableRemoteCommands()
         
         resolve(NSNull())
     }

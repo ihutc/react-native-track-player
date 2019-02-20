@@ -144,6 +144,7 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         self.remoteCommandController = remoteCommandController
         
         self._wrapper.delegate = self
+        self._wrapper.automaticallyWaitsToMinimizeStalling = false
         self.remoteCommandController.audioPlayer = self
     }
     
@@ -176,10 +177,12 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
             wrapper.currentItem?.audioTimePitchAlgorithm = audioTimePitchAlgorithm
         }
         
+        
+        
         self._currentItem = item
         self.updateMetaValues(item: item)
         setArtwork(forItem: item)
-        enableRemoteCommands(forItem: item)
+        //enableRemoteCommands(forItem: item) // Disabled because we won't use it on every song load
     }
     
     /**
@@ -232,6 +235,10 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
         else {
             self.enableRemoteCommands(remoteCommands)
         }
+    }
+    
+    public func enableRemoteCommands() { // Added to sync when calling update method
+         self.enableRemoteCommands(remoteCommands)
     }
     
     // MARK: - NowPlayingInfo
