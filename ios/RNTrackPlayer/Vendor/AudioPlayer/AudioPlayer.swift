@@ -176,6 +176,9 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
             wrapper.currentItem?.audioTimePitchAlgorithm = audioTimePitchAlgorithm
         }
         
+        
+        _wrapper.automaticallyWaitsToMinimizeStalling = false;
+        
         self._currentItem = item
         self.updateMetaValues(item: item)
         setArtwork(forItem: item)
