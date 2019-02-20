@@ -256,12 +256,25 @@ public class AudioPlayer: AVPlayerWrapperDelegate {
     
     func setArtwork(forItem item: AudioItem) {
         guard automaticallyUpdateNowPlayingInfo else { return }
-        item.getArtwork { (image) in
-            if let image = image {
-                let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (size) -> UIImage in
-                    return image
-                })
-                self.nowPlayingInfoController.set(keyValue: MediaItemProperty.artwork(artwork))
+
+        if let artworkUri = item.getArtwork() {
+            let url = NSURL.fileURL(withPath: artworkUri)
+
+            if FileManager.default.fileExists(atPath: url.path) {
+                do {
+                    let data = try Data(contentsOf: url)
+                    let image = UIImage(data: data)
+                
+                    if let image = image {
+                        let artwork = MPMediaItemArtwork(boundsSize: image.size, requestHandler: { (size) -> UIImage in
+                            return image
+                        })
+                        
+                        self.nowPlayingInfoController.set(keyValue: MediaItemProperty.artwork(artwork))
+                    }                    
+                } catch {
+                    return
+                }
             }
         }
     }

@@ -24,7 +24,7 @@ class Track: NSObject, AudioItem {
     let artworkURL: MediaURL?
     var skipped: Bool = false
     @objc let album: String?
-    @objc var artwork: MPMediaItemArtwork?
+    @objc var artwork: String?
     
     private let originalObject: [String: Any]
     
@@ -47,6 +47,7 @@ class Track: NSObject, AudioItem {
         self.pitchAlgorithm = dictionary["pitchAlgorithm"] as? String
         self.duration = dictionary["duration"] as? Double
         self.artworkURL = MediaURL(object: dictionary["artwork"])
+        self.artwork = dictionary["artwork"] as? String
         
         self.originalObject = dictionary
     }
@@ -97,17 +98,7 @@ class Track: NSObject, AudioItem {
         return .lowQualityZeroLatency
     }
     
-    func getArtwork(_ handler: @escaping (UIImage?) -> Void) {
-        if let artworkURL = artworkURL?.value {
-            URLSession.shared.dataTask(with: artworkURL, completionHandler: { (data, _, error) in
-                if let data = data, let artwork = UIImage(data: data), error == nil {
-                    handler(artwork)
-                }
-                
-                handler(nil)
-            }).resume()
-        }
-        
-        handler(nil)
+    func getArtwork() -> String? {
+        return artwork
     }
 }

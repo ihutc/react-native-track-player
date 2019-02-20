@@ -20,7 +20,7 @@ public protocol AudioItem {
     func getTitle() -> String?
     func getAlbumTitle() -> String?
     func getSourceType() -> SourceType
-    func getArtwork(_ handler: @escaping (UIImage?) -> Void)
+    func getArtwork() -> String?
     
 }
 
@@ -43,9 +43,10 @@ public class DefaultAudioItem: AudioItem {
     
     public var sourceType: SourceType
     
-    public var artwork: UIImage?
+    public var artwork: String?
     
-    public init(audioUrl: String, artist: String? = nil, title: String? = nil, albumTitle: String? = nil, sourceType: SourceType, artwork: UIImage? = nil) {
+    
+    public init(audioUrl: String, artist: String? = nil, title: String? = nil, albumTitle: String? = nil, sourceType: SourceType, artwork: String? = nil) {
         self.audioUrl = audioUrl
         self.artist = artist
         self.title = title
@@ -74,8 +75,8 @@ public class DefaultAudioItem: AudioItem {
         return sourceType
     }
 
-    public func getArtwork(_ handler: @escaping (UIImage?) -> Void) {
-        handler(artwork)
+    public func getArtwork() -> String? {
+        return artwork
     }
     
 }
@@ -85,12 +86,12 @@ public class DefaultAudioItemTimePitching: DefaultAudioItem, TimePitching {
     
     public var pitchAlgorithmType: AVAudioTimePitchAlgorithm
     
-    public override init(audioUrl: String, artist: String?, title: String?, albumTitle: String?, sourceType: SourceType, artwork: UIImage?) {
+    public override init(audioUrl: String, artist: String?, title: String?, albumTitle: String?, sourceType: SourceType, artwork: String?) {
         self.pitchAlgorithmType = AVAudioTimePitchAlgorithm.lowQualityZeroLatency
         super.init(audioUrl: audioUrl, artist: artist, title: title, albumTitle: albumTitle, sourceType: sourceType, artwork: artwork)
     }
     
-    public init(audioUrl: String, artist: String?, title: String?, albumTitle: String?, sourceType: SourceType, artwork: UIImage?, audioTimePitchAlgorithm: AVAudioTimePitchAlgorithm) {
+    public init(audioUrl: String, artist: String?, title: String?, albumTitle: String?, sourceType: SourceType, artwork: String?, audioTimePitchAlgorithm: AVAudioTimePitchAlgorithm) {
         self.pitchAlgorithmType = audioTimePitchAlgorithm
         super.init(audioUrl: audioUrl, artist: artist, title: title, albumTitle: albumTitle, sourceType: sourceType, artwork: artwork)
     }
